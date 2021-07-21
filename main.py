@@ -5,7 +5,7 @@ import os
 from discord.ext.commands import bot
 
 client = commands.Bot(command_prefix=when_mentioned_or("."))
-token = os.getenv("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.ZYdSEtney7HcOxA77fkUjD0rQqE")
+token = os.getenv("Token")
 
 @client.event
 async def on_ready() :
@@ -27,4 +27,4 @@ async def on_message(message):
         
     await bot.process_commands(message)    
     
-client.run("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.ZYdSEtney7HcOxA77fkUjD0rQqE")
+client.run("Token")
