@@ -15,20 +15,6 @@ async def on_ready() :
     await client.change_presence(status = discord.Status.idle, activity = discord.Game("Working on myself"))
     print("Ready to Deploy")
 
-from discord import Member
-from discord.ext.commands import has_permissions, MissingPermissions
-
-@client.command(name="kick", pass_context=True)
-@has_permissions(manage_roles=True, ban_members=True)
-async def _kick(ctx, member: Member):
-    await client.kick(member)
-
-@_kick.error
-async def kick_error(ctx, error):
-    if isinstance(error, MissingPermissions):
-        text = "Sorry {}, you do not have permissions to do that!".format(ctx.message.author)
-        await client.send_message(ctx.message.channel, text)
-
 @client.command(name="whoami")
 async def whoami(ctx) :
     await ctx.send(f"You are {ctx.message.author.name}")
@@ -41,13 +27,6 @@ async def clear(ctx, amount:int =10):
 async def choose(ctx, *choices: str):
     """Chooses between multiple choices."""
     await ctx.send(random.choice(choices))
-
-@client.command(name="fixpl")
-async def fix(ctx, user) :
-    league= {pl, champ, league1, league2}
-    if league= a
-    await ctx.send()
-    await ctx.send(f"Go here to see all the fixtures https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/-1/-1/-1.html")
 
 @client.command(name="invite")
 async def invite(ctx) :
