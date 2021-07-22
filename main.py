@@ -3,9 +3,11 @@ import discord
 from discord.ext import commands
 import os
 import random
+import datetime
 
 from discord.ext import commands
 
+x = datetime.datetime.now()
 client = commands.Bot(command_prefix=";")
 token = os.getenv("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.NmIty0Y_Ku4Aavt4dH8PkICu9uc")
 
@@ -26,6 +28,11 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 async def ban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
     await ctx.channel.send(f'{member.mention} has been banned.')
+
+@client.command(name="pl")
+async def pl(ctx):
+    if message.author.id == 760426797418151937
+        await ctx.send(f"Your fixes for the day are https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/847138145/-1/year2021_month07_day(x.strftime("%d")).html")
 
 @client.command(name="whoami")
 async def whoami(ctx) :
