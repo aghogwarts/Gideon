@@ -8,6 +8,7 @@ import datetime
 from discord.ext import commands
 
 x = datetime.datetime.now()
+y = x.strftime("%d")
 client = commands.Bot(command_prefix=";")
 token = os.getenv("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.NmIty0Y_Ku4Aavt4dH8PkICu9uc")
 
@@ -32,7 +33,7 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 @client.command(name="pl")
 async def pl(ctx):
     if ctx.author.id==760426797418151937:
-        await ctx.send(f"Your fixes for the day are https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/847138145/-1/year2021_month07_day(x.strftime("%d")).html")
+        await ctx.send(f"Your fixes for the day are https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/847138145/-1/year2021_month07_day(y).html")
 
 @client.command(name="whoami")
 async def whoami(ctx) :
