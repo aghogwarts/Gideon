@@ -32,6 +32,10 @@ async def choose(ctx, *choices: str):
 async def fix(ctx) :
     await ctx.send(f"Go here to see all the fixtures https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/-1/-1/-1.html")    
 
+@client.command(name="invite")
+async def invite(ctx) :
+    await ctx.send(f"https://discord.com/api/oauth2/authorize?client_id=866988399033319445&permissions=8&scope=bot")
+
 @client.event    
 async def on_message(message):
     for x in message.mentions:
