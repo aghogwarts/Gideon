@@ -22,7 +22,7 @@ async def on_ready() :
 
 @client.command(name="test")
 async def test(ctx):
-    await ctx.send(time.strftime('%Y-%m-%d %H:%M:%S'))
+    await ctx.send(y)
 
 @client.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
