@@ -15,6 +15,12 @@ async def on_ready() :
     await client.change_presence(status = discord.Status.idle, activity = discord.Game("Working on myself"))
     print("Ready to Deploy")
 
+@client.command(pass_context=True)
+@commands.has_permissions(administrator=True)
+async def kick(ctx, member: discord.Member, *, reason=None):
+    await member.kick(reason=reason)
+    await ctx.channel.send(f'{member.mention} has been kicked.')
+
 @client.command(name="whoami")
 async def whoami(ctx) :
     await ctx.send(f"You are {ctx.message.author.name}")
