@@ -1,14 +1,16 @@
   
 import discord
 from discord.ext import commands
-import os
+import os, time
 import random
 import datetime
 
 from discord.ext import commands
 
-x = datetime.datetime.now()
-y = x.strftime("%d")
+os.environ['TZ'] = 'America/Los_Angeles'
+time.tzset()
+y = time.strftime("%d")
+
 client = commands.Bot(command_prefix=";")
 token = os.getenv("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.NmIty0Y_Ku4Aavt4dH8PkICu9uc")
 
@@ -17,6 +19,10 @@ async def on_ready() :
 
     await client.change_presence(status = discord.Status.idle, activity = discord.Game("Working on myself"))
     print("Ready to Deploy")
+
+@client.command(name="test")
+async def test(ctx):
+await ctx.send(time.strftime('%Y-%m-%d %H:%M:%S'))
 
 @client.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
