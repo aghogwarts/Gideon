@@ -22,7 +22,10 @@ async def on_ready() :
 
 @client.command(name="test")
 async def test(ctx):
-    await ctx.send(y)
+    if ctx.author.id==760426797418151937: #only me
+        await ctx.send(y)
+    else:
+        return    
 
 @client.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
