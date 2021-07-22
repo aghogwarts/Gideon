@@ -22,6 +22,7 @@ async def on_ready() :
 
 @client.command(name="test")
 async def test(ctx):
+    """Testing command dev only"""
     if ctx.author.id==760426797418151937: #only me
         await ctx.send(y)
     else:
@@ -41,6 +42,7 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 
 @client.command()
 async def say(ctx,*,message):
+    """Dev only atm due to spam"""
     if ctx.author.id==760426797418151937: #onlyme
         await ctx.send(f"{message}")
         await ctx.message.delete()
@@ -49,6 +51,7 @@ async def say(ctx,*,message):
 
 @client.command(name="fix", description="A command to show your fixtures for today. Note - The link won't work if your day's fixtures are done")
 async def fix(ctx):
+    """See your Futbot League's fixtures for today"""
     if ctx.author.id==760426797418151937: #ag
         await ctx.send(f"Your fixtures for the day are https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/847138145/-1/year2021_month07_day{y}.html")
     elif ctx.author.id==755085116593799198: #hima
@@ -155,6 +158,7 @@ async def choose(ctx, *choices: str):
 
 @client.command(name="invite")
 async def invite(ctx) :
+    """Bot invite, pretty useless cause this bot is private atm"""
     await ctx.send(f"https://discord.com/api/oauth2/authorize?client_id=866988399033319445&permissions=8&scope=bot")
 
 @client.event    
