@@ -21,6 +21,12 @@ async def kick(ctx, member: discord.Member, *, reason=None):
     await member.kick(reason=reason)
     await ctx.channel.send(f'{member.mention} has been kicked.')
 
+@client.command(pass_context=True)
+@commands.has_permissions(ban_members=True)
+async def ban(ctx, member: discord.Member, *, reason=None):
+    await member.ban(reason=reason)
+    await ctx.channel.send(f'{member.mention} has been banned.')
+
 @client.command(name="whoami")
 async def whoami(ctx) :
     await ctx.send(f"You are {ctx.message.author.name}")
