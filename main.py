@@ -33,7 +33,7 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 @client.command(name="pl")
 async def pl(ctx):
     if ctx.author.id==760426797418151937:
-        await ctx.send(f"Your fixes for the day are https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/847138145/-1/year2021_month07_day(y).html")
+        await ctx.send(f"Your fixes for the day are https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/847138145/-1/year2021_month07_day{y}.html")
 
 @client.command(name="whoami")
 async def whoami(ctx) :
