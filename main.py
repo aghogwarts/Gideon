@@ -30,10 +30,14 @@ async def ban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
     await ctx.channel.send(f'{member.mention} has been banned.')
 
-@client.command(name="pl")
-async def pl(ctx):
+@client.command(name="fixes")
+async def fixes(ctx):
     if ctx.author.id==760426797418151937:
         await ctx.send(f"Your fixes for the day are https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/847138145/-1/year2021_month07_day{y}.html")
+    elif ctx.author.id==755085116593799198:
+        await ctx.send(f"Your fixes for the day are https://futbotleagues.leaguerepublic.com/matches/855960929/-1_-1/847138145/-1/year2021_month07_day{y}.html")
+    else:
+        return
 
 @client.command(name="whoami")
 async def whoami(ctx) :
