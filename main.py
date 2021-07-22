@@ -161,7 +161,7 @@ async def invite(ctx) :
 async def on_message(message):
     for x in message.mentions:
         if(x==client.user):
-            await message.channel.send(f"<:frogeez:833600103939571734> Did someone mention me? My prefix is `;`and you can do ;help to see a list of commands though there aren't many atm")
+            await message.channel.send(f"<:frogeez:833600103939571734> Did someone mention me? My prefix is `;`and you can do `;help` to see a list of commands though there aren't many atm")
 
     await client.process_commands(message)
 
