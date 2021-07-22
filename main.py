@@ -32,10 +32,12 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 
 @client.command(name="fixes")
 async def fixes(ctx):
-    if ctx.author.id==760426797418151937:
+    if ctx.author.id==760426797418151937: #ag
         await ctx.send(f"Your fixes for the day are https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/847138145/-1/year2021_month07_day{y}.html")
-    elif ctx.author.id==755085116593799198:
+    elif ctx.author.id==755085116593799198: #hima
         await ctx.send(f"Your fixes for the day are https://futbotleagues.leaguerepublic.com/matches/855960929/-1_-1/847138145/-1/year2021_month07_day{y}.html")
+    elif ctx.author.id==755367944921415750: #azpi
+        await ctx.send(f"Your fixes for the day are https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/874662484/-1/year2021_month07_day{y}.html")
     else:
         return
 
