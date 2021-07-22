@@ -32,8 +32,9 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 
 @client.command()
 async def say(ctx,*,message):
-    await ctx.send(f"{message}")
-    await ctx.message.delete()
+    if ctx.author.id==760426797418151937: #onlyme
+        await ctx.send(f"{message}")
+        await ctx.message.delete()
 
 @client.command(name="fix", description="A command to show your fixtures for today. Note - The link won't work if your day's fixtures are done")
 async def fix(ctx):
@@ -149,7 +150,7 @@ async def invite(ctx) :
 async def on_message(message):
     for x in message.mentions:
         if(x==client.user):
-            await message.channel.send(f":sauropod: did someone mention me? My prefix is `;`")
+            await message.channel.send(f":frogeez: Did someone mention me? My prefix is `;`and you can do ;help to see a list of commands though there aren't many atm")
 
     await client.process_commands(message)
 
