@@ -35,6 +35,8 @@ async def say(ctx,*,message):
     if ctx.author.id==760426797418151937: #onlyme
         await ctx.send(f"{message}")
         await ctx.message.delete()
+    else:
+        return    
 
 @client.command(name="fix", description="A command to show your fixtures for today. Note - The link won't work if your day's fixtures are done")
 async def fix(ctx):
