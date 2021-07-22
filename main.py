@@ -16,7 +16,7 @@ async def on_ready() :
     print("Ready to Deploy")
 
 @client.command(pass_context=True)
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(kick_members=True)
 async def kick(ctx, member: discord.Member, *, reason=None):
     await member.kick(reason=reason)
     await ctx.channel.send(f'{member.mention} has been kicked.')
