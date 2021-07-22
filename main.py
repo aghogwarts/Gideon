@@ -7,7 +7,7 @@ import datetime
 
 from discord.ext import commands
 
-os.environ['TZ'] = 'America/Los_Angeles'
+os.environ['TZ'] = 'Europe/London'
 time.tzset()
 y = time.strftime("%d")
 
