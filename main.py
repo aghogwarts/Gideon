@@ -8,10 +8,12 @@ import datetime
 from discord.ext import commands
 
 class TZ1(datetime.tzinfo):
-  def utcoffset(self, dt):
-    return datetime.timedelta(hours=1)
+    def utcoffset(self, dt):
+        return datetime.timedelta(hours=1)
+    def dst(self, dt):
+        return datetime.timedelta(hours=1)
 
-x = datetime.datetime.now(tz=TZ1)
+x = datetime.datetime.now(tz=TZ1())
 y = time.strftime("%d")    
 
 client = commands.Bot(command_prefix=";")
