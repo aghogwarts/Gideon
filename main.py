@@ -117,7 +117,7 @@ league = {760426797418151937:847138145, #ag
 async def fix(ctx):
     """See your Futbot League's fixtures for today"""
     if ctx.author.id in league.keys():
-        await ctx.send(f"Your fixtures for the day are https://futbotleagues.leaguerepublic.com/matches/229039714/-1_-1/{league[ctx.author.id]}/-1/year2021_month07_day{y}.html")
+        await ctx.send(f"All Leagues are done <:pepebusiness:859047053413974026>. Come back when the leagues start again.. That's August 2")
     else:
         return
 
