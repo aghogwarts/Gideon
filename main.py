@@ -28,7 +28,7 @@ async def on_ready() :
 async def test(ctx):
     """Testing command dev only"""
     if ctx.author.id==760426797418151937: #only me
-        await ctx.send(f"Date is {y} and Time is {x}")
+        await ctx.send(f"Date is {y}")
     else:
         return    
 
