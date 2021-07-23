@@ -8,7 +8,7 @@ import datetime
 from discord.ext import commands
 
 os.environ['TZ'] = 'Europe/London'
-time.tzset()
+time.tzset.now()
 y = time.strftime("%d")
 
 client = commands.Bot(command_prefix=";")
