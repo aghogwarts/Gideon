@@ -166,7 +166,7 @@ async def invite(ctx) :
     """Bot invite, pretty useless cause this bot is private atm"""
     await ctx.send(f"https://discord.com/api/oauth2/authorize?client_id=866988399033319445&permissions=8&scope=bot")
 
-dictonary = {"760426797418151937":"value1", "755085116593799198":"value2", "762619877747851275":"value3"}
+dictonary = {"760426797418151937":"123", "755085116593799198":"456", "762619877747851275":"999"}
 @client.command()
 async def test2(ctx):
     if ctx.author.id in dictonary.keys():
