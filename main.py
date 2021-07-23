@@ -7,9 +7,9 @@ import datetime
 
 from discord.ext import commands
 
-class TZ1(tzinfo):
+class TZ1(datetime.tzinfo):
   def utcoffset(self, dt):
-    return timedelta(hours=1)
+    return datetime.timedelta(hours=1)
 
 x = datetime.datetime.now(tz=TZ1)
 y = time.strftime("%d")    
@@ -27,7 +27,7 @@ async def on_ready() :
 async def test(ctx):
     """Testing command dev only"""
     if ctx.author.id==760426797418151937: #only me
-        await ctx.send(y)
+        await ctx.send(f"Date is {y} and Time is {x}")
     else:
         return    
 
