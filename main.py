@@ -165,6 +165,14 @@ async def invite(ctx) :
     """Bot invite, pretty useless cause this bot is private atm"""
     await ctx.send(f"https://discord.com/api/oauth2/authorize?client_id=866988399033319445&permissions=8&scope=bot")
 
+dictonary = {"760426797418151937":"value1", "755085116593799198":"value2", "762619877747851275":"value3"}
+@client.command()
+async def test2(self, ctx, member:discord.Member):
+    if member.id in dictonary.keys():
+        await ctx.send(dictonary[str(member.id)])
+    else:
+        await ctx.send("Member ID not in list")
+
 @client.event    
 async def on_message(message):
     for x in message.mentions:
