@@ -1,5 +1,6 @@
   
 import discord
+from discord import message
 from discord.ext import commands
 import os, time
 import random
@@ -167,9 +168,9 @@ async def invite(ctx) :
 
 dictonary = {"760426797418151937":"value1", "755085116593799198":"value2", "762619877747851275":"value3"}
 @client.command()
-async def test2(self, ctx, member:discord.Member):
-    if member.id in dictonary.keys():
-        await ctx.send(dictonary[str(member.id)])
+async def test2(ctx):
+    if ctx.author.id in dictonary.keys():
+        await ctx.send(dictonary[str(ctx.author.id)])
     else:
         await ctx.send("Member ID not in list")
 
