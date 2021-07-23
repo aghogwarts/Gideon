@@ -13,8 +13,7 @@ class TZ1(datetime.tzinfo):
     def dst(self, dt):
         return datetime.timedelta(hours=1)
 
-x = datetime.datetime.now(tz=TZ1())
-y = time.strftime("%d")    
+y = datetime.datetime.now(tz=TZ1()).strftime("%d")    
 
 client = commands.Bot(command_prefix=";")
 token = os.getenv("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.NmIty0Y_Ku4Aavt4dH8PkICu9uc")
