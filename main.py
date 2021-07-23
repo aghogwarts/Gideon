@@ -7,9 +7,12 @@ import datetime
 
 from discord.ext import commands
 
-os.environ['TZ'] = 'Europe/London'
-time.tzset.now()
-y = time.strftime("%d")
+class TZ1(tzinfo):
+  def utcoffset(self, dt):
+    return timedelta(hours=1)
+
+x = datetime.datetime.now(tz=TZ1)
+y = time.strftime("%d")    
 
 client = commands.Bot(command_prefix=";")
 token = os.getenv("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.NmIty0Y_Ku4Aavt4dH8PkICu9uc")
