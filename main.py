@@ -22,7 +22,7 @@ token = os.getenv("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.NmIty0Y_Ku4Aavt4dH8PkICu9uc")
 @client.event
 async def on_ready() :
 
-    await client.change_presence(status = discord.Status.idle, activity = discord.Activity(type=discord.ActivityType.listening, name=";help or @Gideon"))
+    await client.change_presence(status = discord.Status.dnd, activity = discord.Activity(type=discord.ActivityType.listening, name=";help or @Gideon"))
     print("Ready to Deploy")
 
 @client.command(name="test")
