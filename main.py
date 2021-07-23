@@ -170,7 +170,7 @@ dictonary = {760426797418151937:123, 755085116593799198:456, 762619877747851275:
 @client.command()
 async def test2(ctx):
     if ctx.author.id in dictonary.keys():
-        await ctx.send(dictonary[ctx.author.id])
+        await ctx.send(https://{dictonary[ctx.author.id]}xyz.com)
     else:
         await ctx.send("Member ID not in list")
 
