@@ -121,6 +121,10 @@ async def fix(ctx):
     else:
         return
 
+@client.event
+async def on_command_error(ctx, error):
+    await ctx.send(f'Error- `{error}` Try ;help')
+
 @client.event    
 async def on_message(message):
     for x in message.mentions:
