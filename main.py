@@ -48,7 +48,7 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 @client.command()
 async def say(ctx,*,message):
     """Dev only atm due to spam"""
-    if ctx.author.id==760426797418151937: #onlyme
+    if ctx.author.id==760426797418151937 or 755085116593799198: #onlyme
         await ctx.send(f"{message}")
         await ctx.message.delete()
     else:
