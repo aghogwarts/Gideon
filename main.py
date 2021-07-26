@@ -80,7 +80,7 @@ league = {760426797418151937:847138145, #ag
   585479151344025622:956829629, #jalli
   755368781047529642:123407488, #jerwin
   549210192076603407:494516009, #joey
-  842723531073519619:708714348, #josiah
+  565292861222944769:708714348, #damnboy
   508023836432662540:132800515, #kaapo
   173014215680983040:900151105, #kaki
   604657414649806849:197671480, #marius
@@ -125,6 +125,11 @@ async def fix(ctx):
 async def on_command_error(ctx, error):
     await ctx.send(f'Error- `{error}` Try ;help')
 
+@client.event(name="sheet", description="Link to a google sheet to guide you through the best combos possible in Soccer Guru")
+async def sheet(ctx):
+    """Best possible Combos in a SG Team"""
+    await ctx.send(f"Google Sheet Link :- https://docs.google.com/spreadsheets/d/1QjsLi1wpdLFeJuNhx-hFg_Lw-FDz2dcQnR3gbygXB3A/edit?usp=sharing")
+    
 @client.event    
 async def on_message(message):
     for x in message.mentions:
