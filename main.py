@@ -125,11 +125,11 @@ async def fix(ctx):
 async def on_command_error(ctx, error):
     await ctx.send(f'Error- `{error}` Try ;help')
 
-@client.event(name="sheet", description="Link to a google sheet to guide you through the best combos possible in Soccer Guru")
+@client.command(name="sheet", description="Link to a google sheet to guide you through the best combos possible in Soccer Guru")
 async def sheet(ctx):
     """Best possible Combos in a SG Team"""
     await ctx.send(f"Google Sheet Link :- https://docs.google.com/spreadsheets/d/1QjsLi1wpdLFeJuNhx-hFg_Lw-FDz2dcQnR3gbygXB3A/edit?usp=sharing")
-    
+
 @client.event    
 async def on_message(message):
     for x in message.mentions:
