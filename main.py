@@ -5,8 +5,7 @@ from discord.ext import commands
 import os, time
 import random
 import datetime
-
-from discord.ext import commands
+import mysql.connector
 
 class TZ1(datetime.tzinfo):
     def utcoffset(self, dt):
@@ -18,6 +17,23 @@ y = datetime.datetime.now(tz=TZ1()).strftime("%d")
 
 client = commands.Bot(command_prefix=";")
 token = os.getenv("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.NmIty0Y_Ku4Aavt4dH8PkICu9uc")
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="AnshG",
+  password="AnshG2204$",
+  database="testdb"
+)
+
+@client.command(name="search")
+async def search(ctx, player):
+    mycursor = mydb.cursor()
+    sql = "SELECT * FROM players WHERE Name Like %s"
+    val = (f"%{player}%",)
+    mycursor.execute(sql, val)
+    myresult = mycursor.fetchall()
+    for player in myresult:
+        await ctx.send(f"Name: `{player[0]}` Rating: `{player[1]}` Position: `{player[2]}` Version: `{player[3]}` Base Stats : `{player[4]}`")
 
 @client.event
 async def on_ready() :
