@@ -19,16 +19,16 @@ client = commands.Bot(command_prefix=";")
 token = os.getenv("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.NmIty0Y_Ku4Aavt4dH8PkICu9uc")
 
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="AnshG",
-  password="AnshG2204$",
-  database="testdb"
+  host="bh002.bluefoxhost.com",
+  user="u333_q34vaVFrPW",
+  password="3P.zWdY2Y.VKCFnWVsRJJ=XV",
+  database="s333_PlayersDB"
 )
 
 @client.command(name="search")
 async def search(ctx, player):
     mycursor = mydb.cursor()
-    sql = "SELECT * FROM players WHERE Name Like %s"
+    sql = "SELECT * FROM `TABLE 1` WHERE Name Like %s"
     val = (f"%{player}%",)
     mycursor.execute(sql, val)
     myresult = mycursor.fetchall()
