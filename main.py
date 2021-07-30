@@ -1,5 +1,5 @@
   
-import di
+import discord
 from discord import message
 from discord.ext import commands
 import os, time
@@ -15,7 +15,7 @@ class TZ1(datetime.tzinfo):
 
 y = datetime.datetime.now(tz=TZ1()).strftime("%d")    
 
-client = commands.Bot(command_prefix=";")
+client = comands.Bot(command_prefix=";")
 token = os.getenv("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.NmIty0Y_Ku4Aavt4dH8PkICu9uc")
 
 mydb = mysql.connector.connect(
