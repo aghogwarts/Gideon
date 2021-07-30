@@ -1,5 +1,5 @@
   
-import discord
+import di
 from discord import message
 from discord.ext import commands
 import os, time
