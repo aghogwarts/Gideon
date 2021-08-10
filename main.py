@@ -7,15 +7,10 @@ import random
 import datetime
 import mysql.connector
 
-class TZ1(datetime.tzinfo):
-    def utcoffset(self, dt):
-        return datetime.timedelta(hours=1)
-    def dst(self, dt):
-        return datetime.timedelta(hours=1)
+x = datetime.datetime.utcnow()
+y = datetime.datetime.utcnow().strftime("%d")
 
-y = datetime.datetime.now(tz=TZ1()).strftime("%d")    
-
-client = comands.Bot(command_prefix=";")
+client = commands.Bot(command_prefix=";")
 token = os.getenv("ODY2OTg4Mzk5MDMzMzE5NDQ1.YPaj3g.NmIty0Y_Ku4Aavt4dH8PkICu9uc")
 
 mydb = mysql.connector.connect(
@@ -28,7 +23,7 @@ mydb = mysql.connector.connect(
 @client.command(name="search")
 async def search(ctx, player):
     mycursor = mydb.cursor()
-    sql = "SELECT * FROM `TABLE 1` WHERE Name Like %s"
+    sql = "SELECT * FROM FUTData WHERE Name Like %s LIMIT 7"
     val = (f"%{player}%",)
     mycursor.execute(sql, val)
     myresult = mycursor.fetchall()
@@ -45,9 +40,9 @@ async def on_ready() :
 async def test(ctx):
     """Testing command dev only"""
     if ctx.author.id==760426797418151937: #only me
-        await ctx.send(f"Date is {y}")
+        await ctx.send(f"Date is {y} Date-Time is {x}")
     else:
-        return    
+        return
 
 @client.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
@@ -64,7 +59,7 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 @client.command()
 async def say(ctx,*,message):
     """Dev only atm due to spam"""
-    if ctx.author.id==760426797418151937 or 755085116593799198: #onlyme
+    if ctx.author.id in (760426797418151937,755085116593799198): #onlyme
         await ctx.send(f"{message}")
         await ctx.message.delete()
     else:
@@ -95,7 +90,7 @@ league = {760426797418151937:847138145, #ag
   585479151344025622:956829629, #jalli
   755368781047529642:123407488, #jerwin
   549210192076603407:494516009, #joey
-  565292861222944769:708714348, #damnboy
+  565292861222944769:490519574, #damnboy
   508023836432662540:132800515, #kaapo
   604657414649806849:197671480, #marius
   468208884960722955:985152495, #mast
@@ -125,13 +120,14 @@ league = {760426797418151937:847138145, #ag
   797435614886363176:583463860, #omar
   467733724394422274:42517100, #ssom
   265590018779774976:232121659, #tbf
-  202162967045734401:721203021 #vuto
+  202162967045734401:721203021, #vuto
+  753800755466469418:520410434, #derek
   }
 @client.command(name="fix", description="A command to show your fixtures for today. Note - The link won't work if your day's fixtures are done")
 async def fix(ctx):
     """See your Futbot League's fixtures for today"""
     if ctx.author.id in league.keys():
-        await ctx.send(f"All Leagues are done <:pepebusiness:859047053413974026>. Come back when the leagues start again.. That's August 2")
+        await ctx.send(f"Your fixtures for the day are https://futbotleagues.leaguerepublic.com/matches/957689942/-1_-1/{league[ctx.author.id]}/-1/year2021_month08_day06.html")
     else:
         return
 
