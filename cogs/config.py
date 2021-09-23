@@ -3,8 +3,8 @@ import random
 import traceback
 
 import asyncio
-import discord
-from discord.ext import commands
+import disnake
+from disnake.ext import commands
 
 import utils.json_loader
 
@@ -17,7 +17,7 @@ class Config(commands.Cog):
         name="blacklist", description="Blacklist a user from the bot", usage="<user>"
     )
     @commands.is_owner()
-    async def blacklist(self, ctx, user: discord.Member):
+    async def blacklist(self, ctx, user: disnake.Member):
         if ctx.message.author.id == user.id:
             await ctx.send("Hey, you cannot blacklist yourself!")
             return
@@ -34,7 +34,7 @@ class Config(commands.Cog):
         usage="<user>",
     )
     @commands.is_owner()
-    async def unblacklist(self, ctx, user: discord.Member):
+    async def unblacklist(self, ctx, user: disnake.Member):
         """
         Unblacklist someone from the bot
         """
@@ -47,12 +47,12 @@ class Config(commands.Cog):
     @commands.command(
         name="logout",
         aliases=["disconnect", "close", "stopbot"],
-        description="Log the bot out of discord!",
+        description="Log the bot out of disnake!",
     )
     @commands.is_owner()
     async def logout(self, ctx):
         """
-        If the user running the command owns the bot then this will disconnect the bot from discord.
+        If the user running the command owns the bot then this will disconnect the bot from Discord.
         """
         await ctx.send(f"Okay {ctx.author.mention}, Gideon signing off :wave:")
         await self.bot.logout()
@@ -65,8 +65,8 @@ class Config(commands.Cog):
         if not cog:
             # No cog, means we reload all cogs
             async with ctx.typing():
-                embed = discord.Embed(
-                    title="\:gear: Reloading all cogs",
+                embed = disnake.Embed(
+                    title=":gear: Reloading all cogs",
                     color=0x808080,
                     timestamp=ctx.message.created_at
                 )
@@ -91,8 +91,8 @@ class Config(commands.Cog):
         else:
             # reload the specific cog
             async with ctx.typing():
-                embed = discord.Embed(
-                    title="\:gear: Carrying out the request",
+                embed = disnake.Embed(
+                    title=":gear: Carrying out the request",
                     color=0x808080,
                     timestamp=ctx.message.created_at
                 )

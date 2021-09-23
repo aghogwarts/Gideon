@@ -1,19 +1,21 @@
 import random
 import asyncio
 import os
-import mysql.connector
 
 from tabulate import tabulate
 
-import discord
-from discord.ext import commands
+import disnake
+from disnake.ext import commands
 
-mydb = mysql.connector.connect(
-    host="bh002.bluefoxhost.com",
-    user="u333_q34vaVFrPW",
-    password="3P.zWdY2Y.VKCFnWVsRJJ=XV",
-    database="s333_PlayersDB"
-)
+from pymongo import MongoClient
+
+myclient = MongoClient("mongodb+srv://ag_discordbot:xxAGxx22@cluster0.gbn7p.mongodb.net/Gideon?retryWrites=true&w=majority")
+mydb = myclient["Gideon"]
+futdb = mydb["FUTData"]
+batdb = mydb["Batsmen"]
+bowldb = mydb["Bowlers"]
+wkdb = mydb["Keepers"]
+alrdb = mydb["AllRounders"]
 
 league = {
   755367944921415750:874662484,  #azpi
@@ -74,8 +76,8 @@ class Futbotcord(commands.Cog):
     )
     async def fix(self, ctx):
         if ctx.author.id in league.keys():
-            embed = discord.Embed(
-                description=f"[Click here](https://futbotleagues.leaguerepublic.com/matches/342846686/-1_-1/{league[ctx.author.id]}/-1/year2021_month08_day31.html) to see your League fixtures for today ```fix\nNote: site won't work or load if all of your fixes are done```",
+            embed = disnake.Embed(
+                description=f"[Click here](https://futbotleagues.leaguerepublic.com/matches/342846686/-1_-1/{league[ctx.author.id]}/-1/year2021_month09_day21.html) to see your League fixtures for today ```fix\nNote: site won't work or load if all of your fixes are done\nHeard Leagues have been stopped for the moment tho```",
                 color=random.choice(self.bot.color_list)
             )
             embed.set_footer(icon_url=ctx.message.author.avatar_url, text="Good luck for the Leagues")
@@ -87,8 +89,8 @@ class Futbotcord(commands.Cog):
         name="sheet", description="Link to a sheet to guide your SG XI making"
     )
     async def sheet(self, ctx):
-        embed = discord.Embed(
-            description="[Click here](https://docs.google.com/spreadsheets/d/1QjsLi1wpdLFeJuNhx-hFg_Lw-FDz2dcQnR3gbygXB3A/edit?usp=sharing) to see a sheet comprising the best SGBot combos in the game ```fix\nYes the sheet is a bit unupdated, it will be updated soon```",
+        embed = disnake.Embed(
+            description="[Click here](https://docs.google.com/spreadsheets/d/1QjsLi1wpdLFeJuNhx-hFg_Lw-FDz2dcQnR3gbygXB3A/edit?usp=sharing) to see a sheet comprising the best SGBot combos in the game ```fix\nYes, the sheet is unupdated and I do not plan to update it sorry```",
             color=random.choice(self.bot.color_list)
         )
         embed.set_footer(icon_url=ctx.message.author.avatar_url, text="Good luck making your XI")
@@ -98,67 +100,96 @@ class Futbotcord(commands.Cog):
         name="search", description="A command to find details of any FUT Player from the Player Database", usage="<playername>"
     )
     async def search(self, ctx, *, player):
-        mycursor = mydb.cursor()
-        sql = "SELECT * FROM FUTData WHERE Name Like %s LIMIT 10"
-        val = (f"%{player}%",)
-        mycursor.execute(sql, val)
-        myresult = mycursor.fetchall()
-        print(val)
-        table = []
+        print({player})
+        player_info = list()
         headers = ["Name", "RAT", "POS", "VER", "BS"]
-        embed = discord.Embed(colour=discord.Colour(0xbde31), description="")
-        for player in myresult:
-            data = [player[0][:25], player[1], player[2], player[3][:12], player[10]]
-            table.append(data)
-            output = tabulate(table, headers, tablefmt="pretty", colalign=("left", "center", "center", "left",))
+        embed = disnake.Embed(colour=random.choice(self.bot.color_list), description="")
+        myquery = { "Name": {"$regex": f"{player}", "$options": "i"}}
+        filters = { "_id": 0, "Name": 1, "RAT": 1, "POS": 1, "VER": 1, "BS": 1}
+        for player in futdb.find(myquery, filters).sort("BS", -1).limit(10):
+            player_result = list()
+            player_result.append(player['Name'][:25])
+            player_result.append(player['RAT'])
+            player_result.append(player['POS'])
+            player_result.append(player['VER'][:12])
+            player_result.append(player['BS'])
+            player_info.append(player_result)
+            output = tabulate(player_info, headers, tablefmt="pretty", colalign=("left", "center", "center", "left",))
         embed.description = f"```\n{output}```"
         embed.set_footer(text="Player lookup")
         await ctx.reply(embed=embed, mention_author=False)
 
     @commands.command(
-        name="find", description="A command to find stats of any Cricket Guru Player 90+(atm) from the Player Database created by me", usage="<name> <type>"
+        name="find", description="Find players and their stats from the CG Player Database (90+ only atm)", usage="<rating> <type>"
     )
-    async def find(self, ctx, rating, type):
-        """Find any Cricket Guru Player from the Database"""
-        mycursor = mydb.cursor()
-        if type == "wk":
-            sql = "SELECT * FROM WicketKeepers WHERE RAT Like %s LIMIT 10"
-            val = (f"%{rating}%",)
-            mycursor.execute(sql, val)
-            myresult = mycursor.fetchall()
-            print(val)
-            for rating in myresult:
-                await ctx.send(
-                    f"Name: `{rating[1]}` Nation: {rating[2]} RAT: `{rating[3]}` BAT: `{rating[4]}` BOWL: `{rating[5]}` {rating[6]} Price: `{rating[7]}`")
-        elif type == "bat":
-            sql = "SELECT * FROM Batsmen WHERE RAT Like %s LIMIT 10"
-            val = (f"%{rating}%",)
-            mycursor.execute(sql, val)
-            myresult = mycursor.fetchall()
-            print(val)
-            for rating in myresult:
-                await ctx.send(
-                    f"Name: `{rating[1]}` Nation: {rating[2]} RAT: `{rating[3]}` BAT: `{rating[4]}` BOWL: `{rating[5]}` {rating[6]} Price: `{rating[7]}`")
-        elif type == "alr":
-            sql = "SELECT * FROM AllRounders WHERE RAT Like %s LIMIT 10"
-            val = (f"%{rating}%",)
-            mycursor.execute(sql, val)
-            myresult = mycursor.fetchall()
-            print(val)
-            for rating in myresult:
-                await ctx.send(
-                    f"Name: `{rating[1]}` Nation: {rating[2]} RAT: `{rating[3]}` BAT: `{rating[4]}` BOWL: `{rating[5]}` {rating[6]} {rating[7]} Price: `{rating[8]}`")
-        elif type == "bowl":
-            sql = "SELECT * FROM Bowlers WHERE RAT Like %s LIMIT 10"
-            val = (f"%{rating}%",)
-            mycursor.execute(sql, val)
-            myresult = mycursor.fetchall()
-            print(val)
-            for rating in myresult:
-                await ctx.send(
-                    f"Name: `{rating[1]}` Nation: {rating[2]} RAT: `{rating[3]}` BAT: `{rating[4]}` BOWL: `{rating[5]}` {rating[6]} Price: `{rating[7]}`")
-        else:
-            return
+    async def find(self, ctx): # ctx, rating, style
+        embed = disnake.Embed(
+            colour=random.choice(self.bot.color_list),
+            description="Sorry, Command under maintenance though I hope to fix it soon. Nevertheless for now [this sheet](https://docs.google.com/spreadsheets/d/19zbGPvT55aiVR8KEQw5I9zI90cdRE7BUjF3qQGik4fo/edit?usp=sharing) might help you with doing almost what the command does"
+        )
+        await ctx.reply(embed=embed, mention_author=False)
+        # style = style.lower()
+        # if style == "wk":
+        #     myquery = {"RAT": rating}
+        #     filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Price": 1}
+        #     for rating in wkdb.find(myquery, filters).sort("BAT", -1):
+        #         print((rating, style))
+        #         player = list()
+        #         player.append(rating['Name'])
+        #         player.append(rating['Nation'])
+        #         player.append(rating['RAT'])
+        #         player.append(rating['BAT'])
+        #         player.append(rating['BOWL'])
+        #         player.append(rating['Type'])
+        #         player.append(rating['Price'])
+        #         print(player)
+        #         print(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
+        #         await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
+        # elif style == "bat":
+        #     myquery = {"RAT": rating}
+        #     filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Price": 1}
+        #     for rating in batdb.find(myquery, filters).sort("BAT", -1):
+        #         print((rating, style))
+        #         player = list()
+        #         player.append(rating['Name'])
+        #         player.append(rating['Nation'])
+        #         player.append(rating['RAT'])
+        #         player.append(rating['BAT'])
+        #         player.append(rating['BOWL'])
+        #         player.append(rating['Type'])
+        #         player.append(rating['Price'])
+        #         await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
+        # elif style == "bowl":
+        #     myquery = {"RAT": rating}
+        #     filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Style": 1, "Price": 1}
+        #     for rating in bowldb.find(myquery, filters).sort("BOWL", -1):
+        #         print((rating, style))
+        #         player = list()
+        #         player.append(rating['Name'])
+        #         player.append(rating['Nation'])
+        #         player.append(rating['RAT'])
+        #         player.append(rating['BAT'])
+        #         player.append(rating['BOWL'])
+        #         player.append(rating['Style'])
+        #         player.append(rating['Price'])
+        #         await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
+        # elif style == "alr":
+        #     myquery = {"RAT": rating}
+        #     filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Style": 1, "Price": 1}
+        #     for rating in alrdb.find(myquery, filters):
+        #         print((rating, style))
+        #         player = list()
+        #         player.append(rating['Name'])
+        #         player.append(rating['Nation'])
+        #         player.append(rating['RAT'])
+        #         player.append(rating['BAT'])
+        #         player.append(rating['BOWL'])
+        #         player.append(rating['Type'])
+        #         player.append(rating['Style'])
+        #         player.append(rating['Price'])
+        #         await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} {player[6]} Price: `{player[7]}`")
+        # else:
+        #     await ctx.reply("Please enter a valid type ALR/WK/BAT/BOWL", mention_author=True, delete_after=15)
 
 def setup(bot):
     bot.add_cog(Futbotcord(bot))

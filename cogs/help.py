@@ -3,8 +3,8 @@ import re
 import math
 import random
 
-import discord
-from discord.ext import commands
+import disnake
+from disnake.ext import commands
 
 
 class Help(commands.Cog):
@@ -15,10 +15,10 @@ class Help(commands.Cog):
         name='help', aliases=['h', 'commands'], description="The help command!"
     )
     async def help(self, ctx, cog="1"):
-        helpEmbed = discord.Embed(
+        helpEmbed = disnake.Embed(
             title="Command List to help you ;)", color=random.choice(self.bot.color_list)
         )
-        helpEmbed.set_thumbnail(url=self.bot.user.avatar_url)
+        helpEmbed.set_thumbnail(url=self.bot.user.avatar.url)
 
         # Get a list of all our current cogs & rmeove ones without commands
         cogs = [c for c in self.bot.cogs.keys()]

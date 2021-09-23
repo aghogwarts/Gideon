@@ -2,8 +2,8 @@ import asyncio
 import platform
 import random
 
-import discord
-from discord.ext import commands
+import disnake
+from disnake.ext import commands
 
 
 class Misc(commands.Cog):
@@ -32,11 +32,11 @@ class Misc(commands.Cog):
         name="info", description="General information about the Bot"
     )
     async def info(self, ctx):
-        infoEmbed = discord.Embed(
-            description="```fix\nAdditional info about this Bot```\n[Invite Me](https://discord.com/api/oauth2/authorize?client_id=866988399033319445&permissions=268822592&scope=bot)\n[View my Documentation](https://workinprogress.com)\n<> indicates an required argument\n[] indicates an optional argument",
+        infoEmbed = disnake.Embed(
+            description="```fix\nAdditional info about this Bot```\n[Invite Me](https://discord.com/api/oauth2/authorize?client_id=866988399033319445&permissions=532844768326&scope=applications.commands%20bot)\n[View my Documentation](https://workinprogress.com)\n<> indicates an required argument\n[] indicates an optional argument",
             color = random.choice(self.bot.color_list)
         )
-        infoEmbed.set_footer(icon_url=ctx.message.author.avatar_url, text="Hope you enjoy using this bot :p")
+        infoEmbed.set_footer(icon_url=ctx.message.author.avatar.url, text="Hope you enjoy using this bot :p")
         await ctx.reply(embed=infoEmbed, mention_author=False)
 
     @commands.command(
@@ -44,11 +44,11 @@ class Misc(commands.Cog):
     )
     async def stats(self, ctx):
         pythonVersion = platform.python_version()
-        dpyVersion = discord.__version__
+        disnakeVersion = disnake.__version__
         serverCount = len(self.bot.guilds)
         memberCount = len(set(self.bot.get_all_members()))
 
-        embed = discord.Embed(
+        embed = disnake.Embed(
             title=f"{self.bot.user.name} Stats",
             description="\uFEFF",
             colour=random.choice(self.bot.color_list),
@@ -57,13 +57,12 @@ class Misc(commands.Cog):
 
         embed.add_field(name="Bot Version:", value=self.bot.version)
         embed.add_field(name="Python Version:", value=pythonVersion)
-        embed.add_field(name="Discord.Py Version", value=dpyVersion)
+        embed.add_field(name="disnake.Py Version", value=disnakeVersion)
         embed.add_field(name="Total Guilds:", value=serverCount)
         embed.add_field(name="Total Users:", value=memberCount)
         embed.add_field(name="Bot Developers:", value="<@760426797418151937>")
 
-        embed.set_footer(text=f"Carpe Noctem | {self.bot.user.name}")
-        embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
+        embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar.url)
 
         await ctx.reply(embed=embed, mention_author=False)
 
@@ -73,7 +72,7 @@ class Misc(commands.Cog):
         command = self.bot.get_command(command)
 
         if command is None:
-            await ctx.send("I can't find a command with that name!")
+            await ctx.send("Lol, sure you've typed an actual command ?")
 
         elif ctx.command == command:
             await ctx.send("You cannot disable this command.")
