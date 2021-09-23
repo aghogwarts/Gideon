@@ -1,2 +1,4 @@
-discord.py
+disnake
 mysql.connector
+tabulate~=0.8.9
+pymongo~=3.12.0

@@ -8,15 +8,15 @@ import logging
 import textwrap
 from traceback import format_exception
 
-import discord
+import disnake
 import pymongo
-from discord.ext import commands
+from disnake.ext import commands
 
 # Local code
 import utils.json_loader
 from utils.mongo import Document
 
-intents = discord.Intents.all()  # Help command requires member intents
+intents = disnake.Intents.all()  # Help command requires member intents
 DEFAULTPREFIX = ";"
 secret_file = utils.json_loader.read_json("secrets")
 bot = commands.Bot(
@@ -55,8 +55,8 @@ async def on_ready():
         f"----------\nReady to Deploy\n----------\n"
     )
     await bot.change_presence(
-        activity = discord.Activity(type = discord.ActivityType.listening, name = ";help or @Gideon"),
-        status = discord.Status.dnd
+        activity = disnake.Activity(type = disnake.ActivityType.listening, name = ";help or @Gideon"),
+        status = disnake.Status.dnd
     )  # This changes the bots 'activity'
 
 @bot.event
