@@ -155,7 +155,7 @@ class Futbotcord(commands.Cog):
                 player.append(rating['BOWL'])
                 player.append(rating['Type'])
                 player.append(rating['Price'])
-                result += f"`{player[0]}` {player[1]} OVR: `{player[2]}` BAT: `{player[3]}` BOWL: `{player[4]}` Price: `{player[6]}`"  # {player[5]}
+                result += f"`{player[0]}` {player[1]} OVR: `{player[2]}` BAT: `{player[3]}` BOWL: `{player[4]}` Price: `{player[6]}`\n"  # {player[5]}
             embed.description = result
             await ctx.reply(embed=embed, mention_author=False)
         elif style == "bowl":
@@ -172,7 +172,7 @@ class Futbotcord(commands.Cog):
                 player.append(rating['BOWL'])
                 player.append(rating['Style'])
                 player.append(rating['Price'])
-                result += f"`{player[0]}` {player[1]} OVR: `{player[2]}` BAT: `{player[3]}` BOWL: `{player[4]}` {player[5]} Price: `{player[6]}`"
+                result += f"`{player[0]}` {player[1]} OVR: `{player[2]}` BAT: `{player[3]}` BOWL: `{player[4]}` {player[5]} Price: `{player[6]}`\n"
             embed.description = result
             await ctx.reply(embed=embed, mention_author=False)
         elif style == "alr":
@@ -190,7 +190,7 @@ class Futbotcord(commands.Cog):
                 player.append(rating['Type'])
                 player.append(rating['Style'])
                 player.append(rating['Price'])
-                result += f"`{player[0]}` {player[1]} OVR: `{player[2]}` BAT: `{player[3]}` BOWL: `{player[4]}` {player[6]} Price: `{player[7]}`"  # {player[5]}
+                result += f"`{player[0]}` {player[1]} OVR: `{player[2]}` BAT: `{player[3]}` BOWL: `{player[4]}` {player[6]} Price: `{player[7]}`\n"  # {player[5]}
             embed.description = result
             await ctx.reply(embed=embed, mention_author=False)
         else:
