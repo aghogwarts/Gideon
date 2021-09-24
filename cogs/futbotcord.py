@@ -179,7 +179,7 @@ class Futbotcord(commands.Cog):
             myquery = {"RAT": rating}
             filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Style": 1, "Price": 1}
             result = ""
-            embed = disnake.Embed(colour=random.choice(self.bot.color_list), title="All-Rounders :cricket-game:", description="")
+            embed = disnake.Embed(colour=random.choice(self.bot.color_list), title="All-Rounders :cricket_game:", description="")
             for rating in alrdb.find(myquery, filters):
                 player = list()
                 player.append(rating['Name'])
