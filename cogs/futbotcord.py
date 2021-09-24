@@ -80,7 +80,7 @@ class Futbotcord(commands.Cog):
                 description=f"[Click here](https://futbotleagues.leaguerepublic.com/matches/342846686/-1_-1/{league[ctx.author.id]}/-1/year2021_month09_day21.html) to see your League fixtures for today ```fix\nNote: site won't work or load if all of your fixes are done\nHeard Leagues have been stopped for the moment tho```",
                 color=random.choice(self.bot.color_list)
             )
-            embed.set_footer(icon_url=ctx.message.author.avatar_url, text="Good luck for the Leagues")
+            embed.set_footer(icon_url=self.bot.user.avatar.url, text="Good luck for the Leagues")
             await ctx.reply(embed=embed, mention_author=False)
         else:
             return
@@ -90,10 +90,10 @@ class Futbotcord(commands.Cog):
     )
     async def sheet(self, ctx):
         embed = disnake.Embed(
-            description="[Click here](https://docs.google.com/spreadsheets/d/1QjsLi1wpdLFeJuNhx-hFg_Lw-FDz2dcQnR3gbygXB3A/edit?usp=sharing) to see a sheet comprising the best SGBot combos in the game ```fix\nYes, the sheet is unupdated and I do not plan to update it sorry```",
+            description="[Click here](https://docs.google.com/spreadsheets/d/1QjsLi1wpdLFeJuNhx-hFg_Lw-FDz2dcQnR3gbygXB3A/edit?usp=sharing) to see a sheet comprising the best SGBot combos in the game ```fix\nYes, the sheet is unupdated and I do not plan to update it as FIFA 21 Season is almost at an end```",
             color=random.choice(self.bot.color_list)
         )
-        embed.set_footer(icon_url=ctx.message.author.avatar_url, text="Good luck making your XI")
+        embed.set_footer(icon_url=ctx.message.author.avatar.url, text="Good luck making your XI")
         await ctx.reply(embed=embed, mention_author=False)
 
     @commands.command(
@@ -122,74 +122,63 @@ class Futbotcord(commands.Cog):
     @commands.command(
         name="find", description="Find players and their stats from the CG Player Database (90+ only atm)", usage="<rating> <type>"
     )
-    async def find(self, ctx): # ctx, rating, style
-        embed = disnake.Embed(
-            colour=random.choice(self.bot.color_list),
-            description="Sorry, Command under maintenance though I hope to fix it soon. Nevertheless for now [this sheet](https://docs.google.com/spreadsheets/d/19zbGPvT55aiVR8KEQw5I9zI90cdRE7BUjF3qQGik4fo/edit?usp=sharing) might help you with doing almost what the command does"
-        )
-        await ctx.reply(embed=embed, mention_author=False)
-        # style = style.lower()
-        # if style == "wk":
-        #     myquery = {"RAT": rating}
-        #     filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Price": 1}
-        #     for rating in wkdb.find(myquery, filters).sort("BAT", -1):
-        #         print((rating, style))
-        #         player = list()
-        #         player.append(rating['Name'])
-        #         player.append(rating['Nation'])
-        #         player.append(rating['RAT'])
-        #         player.append(rating['BAT'])
-        #         player.append(rating['BOWL'])
-        #         player.append(rating['Type'])
-        #         player.append(rating['Price'])
-        #         print(player)
-        #         print(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
-        #         await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
-        # elif style == "bat":
-        #     myquery = {"RAT": rating}
-        #     filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Price": 1}
-        #     for rating in batdb.find(myquery, filters).sort("BAT", -1):
-        #         print((rating, style))
-        #         player = list()
-        #         player.append(rating['Name'])
-        #         player.append(rating['Nation'])
-        #         player.append(rating['RAT'])
-        #         player.append(rating['BAT'])
-        #         player.append(rating['BOWL'])
-        #         player.append(rating['Type'])
-        #         player.append(rating['Price'])
-        #         await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
-        # elif style == "bowl":
-        #     myquery = {"RAT": rating}
-        #     filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Style": 1, "Price": 1}
-        #     for rating in bowldb.find(myquery, filters).sort("BOWL", -1):
-        #         print((rating, style))
-        #         player = list()
-        #         player.append(rating['Name'])
-        #         player.append(rating['Nation'])
-        #         player.append(rating['RAT'])
-        #         player.append(rating['BAT'])
-        #         player.append(rating['BOWL'])
-        #         player.append(rating['Style'])
-        #         player.append(rating['Price'])
-        #         await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
-        # elif style == "alr":
-        #     myquery = {"RAT": rating}
-        #     filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Style": 1, "Price": 1}
-        #     for rating in alrdb.find(myquery, filters):
-        #         print((rating, style))
-        #         player = list()
-        #         player.append(rating['Name'])
-        #         player.append(rating['Nation'])
-        #         player.append(rating['RAT'])
-        #         player.append(rating['BAT'])
-        #         player.append(rating['BOWL'])
-        #         player.append(rating['Type'])
-        #         player.append(rating['Style'])
-        #         player.append(rating['Price'])
-        #         await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} {player[6]} Price: `{player[7]}`")
-        # else:
-        #     await ctx.reply("Please enter a valid type ALR/WK/BAT/BOWL", mention_author=True, delete_after=15)
+    async def find(self, ctx, rating: int, style: str):
+        style = style.lower()
+        if style == "wk":
+            myquery = {"RAT": rating}
+            filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Price": 1}
+            for rating in wkdb.find(myquery, filters).sort("BAT", -1):
+                player = list()
+                player.append(rating['Name'])
+                player.append(rating['Nation'])
+                player.append(rating['RAT'])
+                player.append(rating['BAT'])
+                player.append(rating['BOWL'])
+                player.append(rating['Type'])
+                player.append(rating['Price'])
+                await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
+        elif style == "bat":
+            myquery = {"RAT": rating}
+            filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Price": 1}
+            for rating in batdb.find(myquery, filters).sort("BAT", -1):
+                player = list()
+                player.append(rating['Name'])
+                player.append(rating['Nation'])
+                player.append(rating['RAT'])
+                player.append(rating['BAT'])
+                player.append(rating['BOWL'])
+                player.append(rating['Type'])
+                player.append(rating['Price'])
+                await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
+        elif style == "bowl":
+            myquery = {"RAT": rating}
+            filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Style": 1, "Price": 1}
+            for rating in bowldb.find(myquery, filters).sort("BOWL", -1):
+                player = list()
+                player.append(rating['Name'])
+                player.append(rating['Nation'])
+                player.append(rating['RAT'])
+                player.append(rating['BAT'])
+                player.append(rating['BOWL'])
+                player.append(rating['Style'])
+                player.append(rating['Price'])
+                await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
+        elif style == "alr":
+            myquery = {"RAT": rating}
+            filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Style": 1, "Price": 1}
+            for rating in alrdb.find(myquery, filters):
+                player = list()
+                player.append(rating['Name'])
+                player.append(rating['Nation'])
+                player.append(rating['RAT'])
+                player.append(rating['BAT'])
+                player.append(rating['BOWL'])
+                player.append(rating['Type'])
+                player.append(rating['Style'])
+                player.append(rating['Price'])
+                await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} {player[6]} Price: `{player[7]}`")
+        else:
+            await ctx.reply("Please enter a valid type ALR/WK/BAT/BOWL", mention_author=True, delete_after=15)
 
 def setup(bot):
     bot.add_cog(Futbotcord(bot))
