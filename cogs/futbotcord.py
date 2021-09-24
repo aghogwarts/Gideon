@@ -116,7 +116,7 @@ class Futbotcord(commands.Cog):
             player_info.append(player_result)
             output = tabulate(player_info, headers, tablefmt="pretty", colalign=("left", "center", "center", "left",))
         embed.description = f"```\n{output}```"
-        embed.set_footer(text="Player lookup")
+        embed.set_footer(icon_url=ctx.message.author.avatar.url, text="Player lookup")
         await ctx.reply(embed=embed, mention_author=False)
 
     @commands.command(
@@ -127,6 +127,8 @@ class Futbotcord(commands.Cog):
         if style == "wk":
             myquery = {"RAT": rating}
             filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Price": 1}
+            result = ""
+            embed = disnake.Embed(colour=random.choice(self.bot.color_list), title="Wicket-Keepers :gloves:", description="")
             for rating in wkdb.find(myquery, filters).sort("BAT", -1):
                 player = list()
                 player.append(rating['Name'])
@@ -136,10 +138,14 @@ class Futbotcord(commands.Cog):
                 player.append(rating['BOWL'])
                 player.append(rating['Type'])
                 player.append(rating['Price'])
-                await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
+                result += f"`{player[0]}` {player[1]} OVR: `{player[2]}` BAT: `{player[3]}` BOWL: `{player[4]}` Price: `{player[6]}`\n"  # {player[5]} for type
+            embed.description = result
+            await ctx.reply(embed=embed, mention_author=False)
         elif style == "bat":
             myquery = {"RAT": rating}
             filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Price": 1}
+            result = ""
+            embed = disnake.Embed(colour=random.choice(self.bot.color_list), title="Batsmen <:cbat:874867863264055356>", description="")
             for rating in batdb.find(myquery, filters).sort("BAT", -1):
                 player = list()
                 player.append(rating['Name'])
@@ -149,10 +155,14 @@ class Futbotcord(commands.Cog):
                 player.append(rating['BOWL'])
                 player.append(rating['Type'])
                 player.append(rating['Price'])
-                await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
+                result += f"`{player[0]}` {player[1]} OVR: `{player[2]}` BAT: `{player[3]}` BOWL: `{player[4]}` Price: `{player[6]}`"  # {player[5]}
+            embed.description = result
+            await ctx.reply(embed=embed, mention_author=False)
         elif style == "bowl":
             myquery = {"RAT": rating}
             filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Style": 1, "Price": 1}
+            result = ""
+            embed = disnake.Embed(colour=random.choice(self.bot.color_list), title="Bowlers <:cball:874869772058238986>", description="")
             for rating in bowldb.find(myquery, filters).sort("BOWL", -1):
                 player = list()
                 player.append(rating['Name'])
@@ -162,10 +172,14 @@ class Futbotcord(commands.Cog):
                 player.append(rating['BOWL'])
                 player.append(rating['Style'])
                 player.append(rating['Price'])
-                await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} Price: `{player[6]}`")
+                result += f"`{player[0]}` {player[1]} OVR: `{player[2]}` BAT: `{player[3]}` BOWL: `{player[4]}` {player[5]} Price: `{player[6]}`"
+            embed.description = result
+            await ctx.reply(embed=embed, mention_author=False)
         elif style == "alr":
             myquery = {"RAT": rating}
             filters = {"_id": 0, "Name": 1, "Nation": 1, "RAT": 1, "BAT": 1, "BOWL": 1, "Type": 1, "Style": 1, "Price": 1}
+            result = ""
+            embed = disnake.Embed(colour=random.choice(self.bot.color_list), title="All-Rounders :cricket-game:", description="")
             for rating in alrdb.find(myquery, filters):
                 player = list()
                 player.append(rating['Name'])
@@ -176,7 +190,9 @@ class Futbotcord(commands.Cog):
                 player.append(rating['Type'])
                 player.append(rating['Style'])
                 player.append(rating['Price'])
-                await ctx.send(f"`{player[0]}` {player[1]} Rating: `{player[2]}` Bat: `{player[3]}` Bowl: `{player[4]}` {player[5]} {player[6]} Price: `{player[7]}`")
+                result += f"`{player[0]}` {player[1]} OVR: `{player[2]}` BAT: `{player[3]}` BOWL: `{player[4]}` {player[6]} Price: `{player[7]}`"  # {player[5]}
+            embed.description = result
+            await ctx.reply(embed=embed, mention_author=False)
         else:
             await ctx.reply("Please enter a valid type ALR/WK/BAT/BOWL", mention_author=True, delete_after=15)
 
