@@ -80,7 +80,7 @@ class Help(commands.Cog):
                 elif command.parent != None:
                     continue
 
-                helpText += f"`{command.name}`\n✎ {command.description}"
+                helpText += f"✎ `{command.name}`\n{command.description}"
 
                 if len(command.aliases) > 0:
                     helpText += f'\n**Aliases: ** `{", ".join(command.aliases)}`'
