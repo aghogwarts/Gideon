@@ -19,7 +19,7 @@ class Config(commands.Cog):
     @commands.is_owner()
     async def blacklist(self, ctx, user: disnake.Member):
         if ctx.message.author.id == user.id:
-            await ctx.send("Hey, you cannot blacklist yourself!")
+            await ctx.send("I do not support Drink and Type")
             return
 
         self.bot.blacklisted_users.append(user.id)
@@ -47,7 +47,7 @@ class Config(commands.Cog):
     @commands.command(
         name="logout",
         aliases=["disconnect", "close", "stopbot"],
-        description="Log the bot out of disnake!",
+        description="Log the bot out of discord",
     )
     @commands.is_owner()
     async def logout(self, ctx):
