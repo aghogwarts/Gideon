@@ -12,7 +12,7 @@ class Help(commands.Cog):
         self.bot = bot
 
     @commands.command(
-        name='help', aliases=['h', 'commands'], description="The help command!"
+        name='help', aliases=['commands'], description="The generic help command"
     )
     async def help(self, ctx, cog="1"):
         helpEmbed = disnake.Embed(
@@ -21,8 +21,9 @@ class Help(commands.Cog):
         )
         # helpEmbed.set_thumbnail(url=self.bot.user.avatar.url)
 
-        # Get a list of all our current cogs & rmeove ones without commands
+        # Get a list of all our current cogs & remove ones without commands
         cogs = [c for c in self.bot.cogs.keys()]
+        cogs.remove('Gsheets')
 
         totalPages = math.ceil(len(cogs) / 4)
 

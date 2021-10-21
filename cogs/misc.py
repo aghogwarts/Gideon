@@ -11,36 +11,43 @@ class Misc(commands.Cog):
         self.bot = bot
 
     @commands.command(
-        name="say", description="A command to repeat what you said but restricted to the dev for now"
+        name="say", description="A command to mimic what you said as if the bot has said it",
+        usage="<string>"
     )
     async def say(self, ctx, *, message):
-        if ctx.author.id in (760426797418151937, 755085116593799198):  #onlyme
-            await ctx.send(f"{message}")
-            await ctx.message.delete()
-        else:
-            return
+        await ctx.send(f"{message}")
+        await ctx.message.delete()
 
     @commands.command(
         name="choose",
-        description='For when you wanna settle the score some other way',
+        description="Random choose between a list of options",
         usage="<choice 1> <choice 2>.. <choice n>"
     )
     async def choose(self, ctx, *choices: str):
         await ctx.reply(random.choice(choices), mention_author=False)
+
+    # @commands.command(
+    #     name="shuffle",
+    #     description="Shuffle the order of words in a sequence",
+    #     usage="<word1>, <word2>.. <wordn>"
+    # )
+    # async def shuffle(self, ctx, *, choices: str):
+    #     choices = list(choices)
+    #     await ctx.reply(random.shuffle(choices))
 
     @commands.command(
         name="info", description="General information about the Bot"
     )
     async def info(self, ctx):
         infoEmbed = disnake.Embed(
-            description="```fix\nAdditional info about this Bot```\n[Invite Me](https://discord.com/api/oauth2/authorize?client_id=866988399033319445&permissions=532844768326&scope=applications.commands%20bot)\n[View my Documentation](https://workinprogress.com)\n<> indicates an required argument\n[] indicates an optional argument",
+            description="```fix\nSome info about this Bot```\nA simple multipurpose bot with quite some unique features programmed by <@760426797418151937>.\nI was originally made for a private server\n\n**Contributors -**\n<@807655087643557919>\n[Invite Me](https://discord.com/api/oauth2/authorize?client_id=866988399033319445&permissions=532844768326&scope=applications.commands%20bot)\n[View my Documentation](https://workinprogress.com)",
             color = random.choice(self.bot.color_list)
         )
         infoEmbed.set_footer(icon_url=ctx.message.author.avatar.url, text="Hope you enjoy using this bot :p")
         await ctx.reply(embed=infoEmbed, mention_author=False)
 
     @commands.command(
-        name="stats", description="A useful command that displays bot statistics."
+        name="stats", description="A command to displays bot statistics."
     )
     async def stats(self, ctx):
         pythonVersion = platform.python_version()
@@ -49,7 +56,7 @@ class Misc(commands.Cog):
         memberCount = len(set(self.bot.get_all_members()))
 
         embed = disnake.Embed(
-            title=f"{self.bot.user.name} Stats",
+            title=f"Bot Statistics",
             description="\uFEFF",
             colour=random.choice(self.bot.color_list),
             timestamp=ctx.message.created_at,
@@ -57,7 +64,7 @@ class Misc(commands.Cog):
 
         embed.add_field(name="Bot Version:", value=self.bot.version)
         embed.add_field(name="Python Version:", value=pythonVersion)
-        embed.add_field(name="disnake.Py Version", value=disnakeVersion)
+        embed.add_field(name="disnake Version", value=disnakeVersion)
         embed.add_field(name="Total Guilds:", value=serverCount)
         embed.add_field(name="Total Users:", value=memberCount)
         embed.add_field(name="Bot Developers:", value="<@760426797418151937>")
@@ -66,7 +73,11 @@ class Misc(commands.Cog):
 
         await ctx.reply(embed=embed, mention_author=False)
 
-    @commands.command(name="toggle", description="Enable or disable a command!")
+    @commands.command(
+        name="toggle",
+        description="Enable or disable a command!",
+        usage="<command>"
+    )
     @commands.is_owner()
     async def toggle(self, ctx, *, command):
         command = self.bot.get_command(command)

@@ -19,7 +19,7 @@ class Config(commands.Cog):
     @commands.is_owner()
     async def blacklist(self, ctx, user: disnake.Member):
         if ctx.message.author.id == user.id:
-            await ctx.send("I do not support Drink and Type")
+            await ctx.send("Hey, you cannot blacklist yourself!")
             return
 
         self.bot.blacklisted_users.append(user.id)
@@ -35,9 +35,6 @@ class Config(commands.Cog):
     )
     @commands.is_owner()
     async def unblacklist(self, ctx, user: disnake.Member):
-        """
-        Unblacklist someone from the bot
-        """
         self.bot.blacklisted_users.remove(user.id)
         data = utils.json_loader.read_json("blacklist")
         data["blacklistedUsers"].remove(user.id)
@@ -46,14 +43,11 @@ class Config(commands.Cog):
 
     @commands.command(
         name="logout",
-        aliases=["disconnect", "close", "stopbot"],
+        aliases=["disconnect"],
         description="Log the bot out of discord",
     )
     @commands.is_owner()
     async def logout(self, ctx):
-        """
-        If the user running the command owns the bot then this will disconnect the bot from Discord.
-        """
         await ctx.send(f"Okay {ctx.author.mention}, Gideon signing off :wave:")
         await self.bot.logout()
 
@@ -67,7 +61,7 @@ class Config(commands.Cog):
             async with ctx.typing():
                 embed = disnake.Embed(
                     title=":gear: Reloading all cogs",
-                    color=0x808080,
+                    color=random.choice(self.bot.color_list),
                     timestamp=ctx.message.created_at
                 )
                 for ext in os.listdir("./cogs/"):
@@ -93,7 +87,7 @@ class Config(commands.Cog):
             async with ctx.typing():
                 embed = disnake.Embed(
                     title=":gear: Carrying out the request",
-                    color=0x808080,
+                    color=random.choice(self.bot.color_list),
                     timestamp=ctx.message.created_at
                 )
                 ext = f"{cog.lower()}.py"
