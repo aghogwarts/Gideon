@@ -1,5 +1,5 @@
 disnake~=2.1.2
 tabulate~=0.8.9
 pymongo~=3.12.0
-googleapiclient
+google-api-python-client
 google
