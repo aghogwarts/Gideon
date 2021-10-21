@@ -1,14 +1,10 @@
-# Standard libraries
 import contextlib
 import io
 import os
 import logging
 
-# Third party libraries
-import textwrap
-from traceback import format_exception
-
 import disnake
+from disnake.mentions import AllowedMentions
 import pymongo
 from disnake.ext import commands
 
@@ -25,6 +21,7 @@ bot = commands.Bot(
     owner_id=760426797418151937,
     help_command=None,
     intents=intents,
+    AllowedMentions=False,
 )  # change command_prefix='-' to command_prefix=get_prefix for custom prefixes
 bot.config_token = secret_file["token"]
 bot.connection_url = secret_file["mongo"]
