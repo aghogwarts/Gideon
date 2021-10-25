@@ -38,7 +38,7 @@ Positions=["forward", "midfield", "defence", "goalie"]
 async def autocomp_postn(inter, user_input: str):
     return [postn for postn in Positions if user_input.lower() in postn]
 
-current_gw = "GW 9"
+current_gw = "GW 10"
 
 user_cells={
     "ansh":"C5",
