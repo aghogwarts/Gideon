@@ -81,20 +81,21 @@ ind_pos={
 
 class Gsheets(commands.Cog):
     def __init__(self, bot):
-        self.bot = bot    
+        self.bot = bot
 
     @commands.slash_command(
-        name="test",
-        description="Testing"
+        name="sheet",
+        description="Sends the link to the CBC Tournament S4 google sheet"
     )
-    async def test(self, inter):
-        result = sheet.values().get(
-            spreadsheetId=cbctourneys4,
-            range="Pots!E4:E7"
-        ).execute()
-        values = result.get('values', [])
-        print(values)
-        await inter.response.send_message(f"{values}")
+    async def sheet(
+        self,
+        inter
+    ):
+        embed = disnake.Embed(
+            colour=random.choice(self.bot.color_list),
+            description="[Click here to go to the google sheet](https://docs.google.com/spreadsheets/d/1tPeZUzHuDgZxIu4l-lKUxF1qkkaPuMVGI0xD1Geda8M/edit?usp=sharing)\n<:bravonamaste:868020750907490334>"
+        )
+        await inter.response.send_message(embed=embed, ephemeral=True)
 
 """
     @commands.slash_command(
