@@ -23,7 +23,7 @@ class Help(commands.Cog):
 
         # Get a list of all our current cogs & remove ones without commands
         cogs = [c for c in self.bot.cogs.keys()]
-        cogs.remove('Gsheets')
+        cogs.remove('Gsheets', 'SlashCommands', 'SlashHelp')
 
         totalPages = math.ceil(len(cogs) / 4)
 

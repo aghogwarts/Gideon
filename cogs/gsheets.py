@@ -17,7 +17,8 @@ credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
 # The ID of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1gFjDHVB27FZPsIK1PHF_S4Dex4HklKJrSxkp6-ZmLhc'
+foothubpreds = '1gFjDHVB27FZPsIK1PHF_S4Dex4HklKJrSxkp6-ZmLhc'
+cbctourneys4 = '1tPeZUzHuDgZxIu4l-lKUxF1qkkaPuMVGI0xD1Geda8M'
 
 service = build('sheets', 'v4', credentials=credentials)
 
@@ -28,6 +29,7 @@ sheet = service.spreadsheets()
 #                             range="Sheet1!B2:C4").execute()
 # values = result.get('values', [])
 
+"""
 Predictors=["ansh", "hima", "gorkhali", "ssom", "amit", "spahash", "jerwin", "froge"]
 
 async def autocomp_users(inter, user_input: str):
@@ -38,7 +40,7 @@ Positions=["forward", "midfield", "defence", "goalie"]
 async def autocomp_postn(inter, user_input: str):
     return [postn for postn in Positions if user_input.lower() in postn]
 
-current_gw = "GW 10"
+current_gw = "GW 9"
 
 user_cells={
     "ansh":"C5",
@@ -75,10 +77,36 @@ ind_pos={
     "defence":"E",
     "goalie":"F",
 }
+"""
 
 class Gsheets(commands.Cog):
     def __init__(self, bot):
-        self.bot = bot
+        self.bot = bot    
+
+    @commands.slash_command(
+        name="test",
+        description="Testing"
+    )
+    async def test(self, inter):
+        result = sheet.values().get(
+            spreadsheetId=cbctourneys4,
+            range="Pots!E4:E7"
+        ).execute()
+        values = result.get('values', [])
+        print(values)
+        await inter.response.send_message(f"{values}")
+
+"""
+    @commands.slash_command(
+        guild_ids=[772179896097177631]
+    )
+    async def test(self, inter):
+        result = sheet.values().get(
+            spreadsheetId=cbctourneys4,
+            range=f"League Standings!E4:K6"
+        ).execute()
+        values = result.get('values', [])
+        print(values)
 
     @commands.slash_command(
         guild_ids=[772179896097177631]
@@ -102,7 +130,7 @@ class Gsheets(commands.Cog):
         if inter.author.id in (760426797418151937, 755085116593799198):
             picks = [[forward, midfielder, defender, goalie]]
             request = sheet.values().update(
-                spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                spreadsheetId=foothubpreds,
                 range=f"{current_gw}!{user_cells[user]}",
                 valueInputOption="USER_ENTERED",
                 body={"values":picks}
@@ -133,7 +161,7 @@ class Gsheets(commands.Cog):
         if inter.author.id in (760426797418151937, 755085116593799198):
             picks = [[ansh],[hima],[gork],[ssom],[amit],[spahash],[jerwin],[froge]]
             request = sheet.values().update(
-                spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                spreadsheetId=foothubpreds,
                 range=f"{current_gw}!{pos_cells[position]}",
                 valueInputOption="USER_ENTERED",
                 body={"values":picks}
@@ -158,7 +186,7 @@ class Gsheets(commands.Cog):
         if inter.author.id in (760426797418151937, 755085116593799198):
             picks = [[pick]]
             request = sheet.values().update(
-                spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                spreadsheetId=foothubpreds,
                 range=f"{current_gw}!{ind_pos[position]}{ind_user[user]}",
                 valueInputOption="USER_ENTERED",
                 body={"values":picks}
@@ -184,14 +212,14 @@ class Gsheets(commands.Cog):
         inter
     ):
         result = sheet.values().get(
-            spreadsheetId=SAMPLE_SPREADSHEET_ID,
+            spreadsheetId=foothubpreds,
             range=f"{current_gw}!B5:G12"
         ).execute()
         values = result.get('values', [])
         headers = ["Manager","FWD","MID","DEF","GK","Autosub"]
         summary = tabulate(values, headers, tablefmt="pretty")
         await inter.response.send_message(f"```\n{summary}```", ephemeral=True)
-
+        
     @preds.sub_command(
         name="sheet",
         description="Sends the link to the Predictions google sheet"
@@ -205,6 +233,7 @@ class Gsheets(commands.Cog):
             description="[Click here to go to the google sheet](https://docs.google.com/spreadsheets/d/1gFjDHVB27FZPsIK1PHF_S4Dex4HklKJrSxkp6-ZmLhc/edit?usp=sharing)\n<:messithumbsup:855310126503559198>"
         )
         await inter.response.send_message(embed=embed, ephemeral=True)
+"""
 
 def setup(bot):
     bot.add_cog(Gsheets(bot))
