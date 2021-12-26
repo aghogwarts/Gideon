@@ -1,5 +1,5 @@
 disnake
 tabulate
-pymongo
-googleapiclient
+pymongo[srv]
+google-api-python-client
 google
