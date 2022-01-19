@@ -12,9 +12,9 @@ class SlashHelp(commands.Cog):
         description="Get a list of commands in the bot.",
     )
     async def _help(self, inter: disnake.ApplicationCommandInteraction):
-        embed = disnake.Embed(title="Gideon Help", color=random.choice(self.bot.color_list))
+        embed = disnake.Embed(title="Slash Commands Help", color=random.choice(self.bot.color_list))
         embed.set_thumbnail(url=self.bot.user.display_avatar.url)
-        description = ""
+        description = "```fix\nCommand arguments - <required> [optional]```\n"
         for cog in self.bot.cogs.values():
             for command in cog.__cog_app_commands__:
                 description += "`/" + command.name
@@ -26,7 +26,7 @@ class SlashHelp(commands.Cog):
  
                 description += f"` - {command.description}\n"
         embed.description = description
-        await inter.send(embed=embed)
+        await inter.send(embed=embed, ephemeral=True)
 
 
 def setup(bot):
