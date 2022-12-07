@@ -45,16 +45,18 @@ bot.colors = {
 }
 bot.color_list = [c for c in bot.colors.values()]
 
+
 @bot.event
 async def on_ready():
     # On ready, print some details to standard out
-    print(
-        f"----------\nReady to Deploy\n----------\n"
-    )
+    print(f"----------\nReady to Deploy\n----------\n")
     await bot.change_presence(
-        activity = disnake.Activity(type = disnake.ActivityType.listening, name = ";help or @Gideon"),
-        status = disnake.Status.dnd
+        activity=disnake.Activity(
+            type=disnake.ActivityType.listening, name=";help or @Gideon"
+        ),
+        status=disnake.Status.dnd,
     )  # This changes the bots 'activity'
+
 
 @bot.event
 async def on_message(message):
@@ -71,7 +73,11 @@ async def on_message(message):
     if message.content.startswith(f"<@!{bot.user.id}>") and len(message.content) == len(
         f"<@!{bot.user.id}>"
     ):
-        await message.reply(f"<:frogeez:879789528511025214> Need any help? My prefix is `;`and you can do `;help` to see a list of all the commands programmed in my System", delete_after=15, mention_author=False)
+        await message.reply(
+            f"<:frogeez:879789528511025214> Need any help? My prefix is `;`and you can do `;help` to see a list of all the commands programmed in my System",
+            delete_after=15,
+            mention_author=False,
+        )
 
     await bot.process_commands(message)
 
@@ -79,9 +85,9 @@ async def on_message(message):
 bot.mongo = pymongo.MongoClient(str(bot.connection_url))
 bot.db = bot.mongo["Gideon"]
 
-for file in os.listdir(f'./cogs'):
-    if file.endswith('.py') and not file.startswith('_') and not file.startswith('.'):
-        bot.load_extension(f'cogs.{file[:-3]}')
-        print(f'Loaded the category: {file}')
-    
+for file in os.listdir(f"./cogs"):
+    if file.endswith(".py") and not file.startswith("_") and not file.startswith("."):
+        bot.load_extension(f"cogs.{file[:-3]}")
+        print(f"Loaded the category: {file}")
+
 bot.run(bot.config_token)
