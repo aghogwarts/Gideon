@@ -9,18 +9,19 @@ import random
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-SERVICE_ACCOUNT_FILE = 'cogs/sheetsapi.json'
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+SERVICE_ACCOUNT_FILE = "cogs/sheetsapi.json"
 
 credentials = None
 credentials = service_account.Credentials.from_service_account_file(
-        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    SERVICE_ACCOUNT_FILE, scopes=SCOPES
+)
 
 # The ID of a sample spreadsheet.
-foothubpreds = '1gFjDHVB27FZPsIK1PHF_S4Dex4HklKJrSxkp6-ZmLhc'
-cbctourneys4 = '1tPeZUzHuDgZxIu4l-lKUxF1qkkaPuMVGI0xD1Geda8M'
+foothubpreds = " "
+cbctourneys4 = " "
 
-service = build('sheets', 'v4', credentials=credentials)
+service = build("sheets", "v4", credentials=credentials)
 
 # Call the Sheets API
 sheet = service.spreadsheets()
@@ -79,27 +80,25 @@ ind_pos={
 }
 """
 
+
 class Gsheets(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.slash_command(
-        name="sheet",
-        description="Sends the link to the CBC Tournament S4 google sheet"
+        name="sheet", description="Sends the link to the CBC Tournament S4 google sheet"
     )
-    async def sheet(
-        self,
-        inter
-    ):
+    async def sheet(self, inter):
         embed = disnake.Embed(
             colour=random.choice(self.bot.color_list),
-            description="[Click here to go to the google sheet](https://docs.google.com/spreadsheets/d/1tPeZUzHuDgZxIu4l-lKUxF1qkkaPuMVGI0xD1Geda8M/edit?usp=sharing)\n<:bravonamaste:868020750907490334>"
+            description="[Click here to go to the google sheet]()\n<:bravonamaste:868020750907490334>",
         )
         await inter.response.send_message(embed=embed, ephemeral=True)
 
+
 """
     @commands.slash_command(
-        guild_ids=[772179896097177631]
+        guild_ids=[]
     )
     async def test(self, inter):
         result = sheet.values().get(
@@ -110,7 +109,7 @@ class Gsheets(commands.Cog):
         print(values)
 
     @commands.slash_command(
-        guild_ids=[772179896097177631]
+        guild_ids=[]
     )
     async def picks(self, inter):
         pass
@@ -128,7 +127,7 @@ class Gsheets(commands.Cog):
         defender: str = param(desc="Enter the name of the Defender"),
         goalie: str = param(desc="Enter the name of the Goalkeeper")
     ):
-        if inter.author.id in (760426797418151937, 755085116593799198):
+        if inter.author.id in (, ):
             picks = [[forward, midfielder, defender, goalie]]
             request = sheet.values().update(
                 spreadsheetId=foothubpreds,
@@ -159,7 +158,7 @@ class Gsheets(commands.Cog):
         jerwin: str = param(None, desc="Enter jerwin's pick"),
         froge: str = param(None, desc="Enter froge's pick")
     ):
-        if inter.author.id in (760426797418151937, 755085116593799198):
+        if inter.author.id in (, ):
             picks = [[ansh],[hima],[gork],[ssom],[amit],[spahash],[jerwin],[froge]]
             request = sheet.values().update(
                 spreadsheetId=foothubpreds,
@@ -184,7 +183,7 @@ class Gsheets(commands.Cog):
         position: str = param(desc="Choose the position where the pick is to be updated", autocomp=autocomp_postn),
         pick: str = param(desc="Enter the pick to be updated")
     ):
-        if inter.author.id in (760426797418151937, 755085116593799198):
+        if inter.author.id in (, ):
             picks = [[pick]]
             request = sheet.values().update(
                 spreadsheetId=foothubpreds,
@@ -199,7 +198,7 @@ class Gsheets(commands.Cog):
             await inter.response.send_message("Sorry, you don't have access to this command :jayshreeram:", ephemeral=True)
 
     @commands.slash_command(
-        guild_ids=[772179896097177631]
+        guild_ids=[]
     )
     async def preds(self, inter):
         pass
@@ -231,10 +230,11 @@ class Gsheets(commands.Cog):
     ):
         embed = disnake.Embed(
             colour=random.choice(self.bot.color_list),
-            description="[Click here to go to the google sheet](https://docs.google.com/spreadsheets/d/1gFjDHVB27FZPsIK1PHF_S4Dex4HklKJrSxkp6-ZmLhc/edit?usp=sharing)\n<:messithumbsup:855310126503559198>"
+            description="[Click here to go to the google sheet]()\n<:messithumbsup:855310126503559198>"
         )
         await inter.response.send_message(embed=embed, ephemeral=True)
 """
+
 
 def setup(bot):
     bot.add_cog(Gsheets(bot))
